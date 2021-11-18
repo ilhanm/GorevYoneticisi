@@ -1,0 +1,76 @@
+﻿@model IEnumerable<GorevYoneticisi.Models.Gorev>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container p-3">
+<div class="row pt-4">
+    <div class="col-6">
+        <h2 class="text-primary"> Görev Listesi </h2>
+    </div>
+   <div class="col-6 text-right">
+       <a asp-controller="Gorev" asp-action="Create" class="btn btn-primary">
+           Yeni Görev Oluştur
+       </a>
+       
+    </div>
+</div>
+
+<br /><br />
+   
+    @if(Model.Count()>0){
+        <table class="table table-bordered table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>
+                    Görev Numarası:
+                </th>
+                <th style="width:10%">
+                    Görevin Adı:
+                </th>
+                <th>
+                    Başlangıç Tarihi:
+                </th>
+                <th>
+                    Bitiş Tarihi:
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+                @foreach(var obj in Model)
+                {
+
+                    <tr>
+                        @{string baslangicFormatted = @obj.baslangicTarihi.ToString("dd/M/yyyy");}
+                        @{string bitisFormatted = @obj.bitisTarihi.ToString("dd/M/yyyy");}
+                        <td width="50%">@obj.gorevId</td>
+                        <td width="50%">@obj.gorevAciklama.Trim()</td>
+                        <td width="50%">@baslangicFormatted</td>
+                        <td width="50%">@bitisFormatted</td>
+                        <td class="text-center">
+                            <div class="w-75 btn-group" role="group">
+                                <a asp-controller="Gorev" asp-route-Id="@obj.gorevId" asp-action="Edit" class="btn btn-primary mx-2">
+                                    Edit
+                                </a>
+                                <a asp-controller="Gorev" asp-route-Id="@obj.gorevId" asp-action="Delete" class="btn btn-danger mx-2">
+                                    Delete
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    }
+    else
+    {
+        <p>Aktif göreviniz yok.</p>
+    }
+
+</div>
+
+
+
